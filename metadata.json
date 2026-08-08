@@ -1,0 +1,6 @@
+{
+  "name": "Pesquisas Remuneradas Angola",
+  "description": "Plataforma funcional de micro-pesquisas remuneradas focalizada no mercado angolano, integrando painel de saldo, fluxo de inquéritos inteligentes com anti-fraude e tela de levantamento via Unitel Money, PayPay Angola e IBAN.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

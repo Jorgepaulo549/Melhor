@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "Perfil do utilizador participante com saldo e score de qualidade anti-fraude",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Nome completo do utilizador" },
+        "phone": { "type": "string", "description": "Contacto telefónico em Angola" },
+        "nif": { "type": "string", "description": "Número de Identificação Fiscal nacional" },
+        "balance": { "type": "number", "description": "Saldo disponível em Kwanzas (Kz)" },
+        "completedCount": { "type": "number", "description": "Quantidade total de inquéritos concluídos" },
+        "qualityScore": { "type": "number", "description": "Índice de qualidade do participante em percentagem" },
+        "isVerified": { "type": "boolean", "description": "Se o perfil já foi verificado e preenchido" }
+      },
+      "required": ["name", "phone", "nif", "balance", "completedCount", "qualityScore", "isVerified"]
+    },
+    "transaction": {
+      "title": "Transaction",
+      "description": "Registo de ganho por inquérito ou levantamento de saldo",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Identificador único da transação" },
+        "amount": { "type": "number", "description": "Valor monetário da transação em Kwanzas" },
+        "method": { "type": "string", "description": "Método: Unitel Money, PayPay Angola, ou IBAN / Multicaixa" },
+        "target": { "type": "string", "description": "Destino do levantamento (contacto ou IBAN)" },
+        "date": { "type": "string", "description": "Data e hora formatada da transação" },
+        "status": { "type": "string", "description": "Estado do processamento: Pendente, Processado, Rejeitado" }
+      },
+      "required": ["id", "amount", "method", "target", "date", "status"]
+    },
+    "fraudLog": {
+      "title": "FraudLog",
+      "description": "Registo de auditoria anti-fraude gerado automaticamente pelo algoritmo de segurança",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Código do evento de auditoria" },
+        "timestamp": { "type": "string", "description": "Instante do alerta ou violação" },
+        "surveyTitle": { "type": "string", "description": "Nome do inquérito em que ocorreu" },
+        "type": { "type": "string", "description": "Tipo: Atividade Rápida ou Contradição Lógica" },
+        "description": { "type": "string", "description": "Explicação detalhada da discrepância detetada" },
+        "severity": { "type": "string", "description": "Nível de severidade: Aviso ou Grave" }
+      },
+      "required": ["id", "timestamp", "surveyTitle", "type", "description", "severity"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "Documento principal do perfil de participante do utilizador"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "transaction",
+      "description": "Histórico de levantamentos e ganhos de inquéritos do utilizador"
+    },
+    "/users/{userId}/fraudLogs/{logId}": {
+      "schema": "fraudLog",
+      "description": "Registos de alertas e bloqueios gerados para auditoria anti-fraude do utilizador"
+    }
+  }
+}
